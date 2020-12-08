@@ -18,6 +18,25 @@ variable "project_id" {
   description = "GCP Project to deploy resources"
 }
 
+variable "organization_id" {
+  description = "Parent Organization ID for the project"
+}
+
+variable "folder_id" {
+  description = "Folder ID for the project. Leave blank for Org top level project"
+  default = ""
+}
+
+variable "billing_account" {
+  description = "Billing Account for the project. Leave blank for default"
+  default = ""
+}
+
+
+variable "kubernetes_cluster_name" {
+  description = "Name or the GKE cluster"
+  default = "services"
+}
 variable "domain" {
   description = "Domain for hosting gitlab functionality (ie mydomain.com would access gitlab at gitlab.mydomain.com)"
   default     = ""
@@ -34,7 +53,7 @@ variable "gke_version" {
 
 variable "gke_machine_type" {
   description = "Machine type used for the node-pool"
-  default     = "n1-standard-4"
+  default     = "n2-standard-4"
 }
 
 variable "gitlab_db_name" {
@@ -48,7 +67,12 @@ variable "gitlab_db_random_prefix" {
 }
 
 variable "gitlab_db_password" {
-  description = "Password for the GitLab Postgres user"
+  description = "Password for the GitLab Postgres user. Leave blank to auto generate"
+  default     = ""
+}
+
+variable "gitlab_root_password" {
+  description = "Initial Password for the GitLab Root user. Leave blank to auto generate"
   default     = ""
 }
 
@@ -67,22 +91,33 @@ variable "region" {
   description = "GCP region to deploy resources to"
 }
 
-variable "gitlab_nodes_subnet_cidr" {
+variable "services_cluster_nodes_subnet_cidr" {
   default     = "10.0.0.0/16"
   description = "Cidr range to use for gitlab GKE nodes subnet"
 }
 
-variable "gitlab_pods_subnet_cidr" {
+variable "services_cluster_pods_subnet_cidr" {
   default     = "10.3.0.0/16"
-  description = "Cidr range to use for gitlab GKE pods subnet"
+  description = "Cidr range to use for GKE Services pods subnet"
 }
 
-variable "gitlab_services_subnet_cidr" {
+variable "services_cluster_services_subnet_cidr" {
   default     = "10.2.0.0/16"
-  description = "Cidr range to use for gitlab GKE services subnet"
+  description = "Cidr range to use for GKE Services services subnet"
 }
 variable "helm_chart_version" {
   type        = string
-  default     = "4.2.4"
+  default     = "4.6.1"
   description = "Helm chart version to install during deployment"
+}
+
+
+variable "google_oauth2_client_secret" {
+  # default = ""
+  description = "Google Oauth2 Client Secret. Leave blank to skip"
+}
+
+variable "google_oauth2_client_id" {
+  # default = ""
+  description = "Google Oauth2 Client ID. Leave blank to skip"
 }

@@ -115,3 +115,16 @@ registry:
     secret: gitlab-registry-storage
     key: storage
     extraKey: gcs.json
+
+grafana:
+    enabled: true
+
+
+initialRootPassword: {}
+  secret: pre-created-gitlab-initial-root-password
+  key: password
+
+
+nginx-ingress:
+  scope:
+    enabled: false
